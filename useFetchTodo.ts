@@ -8,6 +8,12 @@ type TodoType = {
   completed: boolean;
 };
 
+const fetchTodos = () => {
+  return  axios
+  .get<TodoType[]>("https://jsonplaceholder.typicode.com/todos")
+  .then(res => res.data);
+} 
+
 export const useFetchTodo = () => {
   const [todo, setTodo] = useState<TodoType[]>([]); // Guarda los datos del fetch
   const [isFetching, setIsFetching] = useState(true); // Indica si está cargando
