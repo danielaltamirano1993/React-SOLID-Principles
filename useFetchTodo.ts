@@ -9,24 +9,22 @@ type TodoType = {
 };
 
 export const useFetchTodo = () => {
-  const [todo, setTodo] = useState<TodoType[]>([]); //guardado los datos del fecth
-  const [isFetching, setIsFetching] = useState(true); // si esta cargando
+  const [todo, setTodo] = useState<TodoType[]>([]); // Guarda los datos del fetch
+  const [isFetching, setIsFetching] = useState(true); // Indica si está cargando
 
   useEffect(() => {
     axios
-    .get<TodoType[]>("https://jsonplaceholder.typicode.com/todos")
-    .then((res => {
-      setTodo(res.data);
-    })
-    .catch((e) => {
-      console.log(e);      
-    })
-    .finally(() => {
-      setIsFetching(false);
-    });
+      .get<TodoType[]>("https://jsonplaceholder.typicode.com/todos")
+      .then((res) => {
+        setTodo(res.data);
+      })
+      .catch((error) => {
+        console.log(error);
+      })
+      .finally(() => {
+        setIsFetching(false);
+      });
   }, []);
-  return {todo, isFetching}
-}
 
-  
- 
+  return { todo, isFetching };
+};
