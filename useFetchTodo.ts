@@ -1,36 +1,15 @@
 import { useEffect, useState } from "react";
-import axios from "axios";
-
-type TodoType = {
-  id: number;
-  userId: number;
-  title: string;
-  completed: boolean;
-};
-
-const fetchTodos = () => {
-  return  axios
-  .get<TodoType[]>("https://jsonplaceholder.typicode.com/todos")
-  .then(res => res.data);
-} 
+import type { fetchTodos } from "./services/todos";
+import type { TodoType} from "./services/todos";
 
 export const useFetchTodo = () => {
   const [todo, setTodo] = useState<TodoType[]>([]); // Guarda los datos del fetch
   const [isFetching, setIsFetching] = useState(true); // Indica si está cargando
 
   useEffect(() => {
-    axios
-      .get<TodoType[]>("https://jsonplaceholder.typicode.com/todos")
-      .then((res) => {
-        setTodo(res.data);
-      })
-      .catch((error) => {
-        console.log(error);
-      })
-      .finally(() => {
-        setIsFetching(false);
-      });
+      fetchTodos()
+      .then(todos => setTodo(todos))
+      .finally(() => setIsFetching(false))
   }, []);
-
-  return { todo, isFetching };
+  return { todo, isFetching }
 };
